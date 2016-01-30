@@ -21,6 +21,7 @@ def order_update(data):
     p = parse.parse_orders(data)
     company = p['ASK']['ticker']
     companies[company]['price'] = p['ASK']['price']
+    companies[company]['shares'] = p['ASK']['shares']
     orders[company] = p
 
 
@@ -41,12 +42,16 @@ def update_all():
     for r in order_responses:
         order_update(r)
 update_all()
+
 mind.update_histories(companies)
 while True:
     if time.time() - st >= TICK_TIME:
         st = time.time()
         update_all()
         mind.update_histories(companies)
-        print(mind.decide())
+        decisions = {}
+        for i in list(companies.keys()):
+            decisions[i] = mind.decide()[i] > 0
+        
     else:
         continue

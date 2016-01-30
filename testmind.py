@@ -20,4 +20,3 @@ def decide():
     for t in range(len(ticks)):
         decides[ticks[t]] = (avgs[t] - olds[t])/histories[ticks[t]][0]
     return decides
-        
