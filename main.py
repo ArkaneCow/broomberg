@@ -57,6 +57,8 @@ while True:
             ratio = mind.decide()[i]
             decision = ratio > 0
             if decision:
-                bc.cmd("BID " + i + str(companies[i]['price']+0.01) + str(int(ratio*1000000)))
+                cmd = "BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*1000000))
+                print(cmd)
+                bc.cmd(cmd)
     else:
         continue

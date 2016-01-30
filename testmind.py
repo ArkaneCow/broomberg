@@ -1,7 +1,10 @@
 SAMPLE_LENGTH = 3
 BID_THRESH = 0
 
+DIV_THRESH = 0
+
 histories = {}
+dividends = {}
 
 def update_histories(companies):
     for k in companies:
