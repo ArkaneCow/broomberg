@@ -11,7 +11,7 @@ def parse_my_securities(output):
         index = i * 3
         ticker = list[index]
         parameters = {}
-        parameters["shares"] = float(list[index + 1])
+        parameters["shares"] = int(list[index + 1])
         parameters["dividend"] = float(list[index + 2]) 
         my_securities[ticker] = parameters
         
