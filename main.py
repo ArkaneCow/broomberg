@@ -37,9 +37,12 @@ def security_update(data):
 
 def our_securities_update():
     p = parse.parse_my_securities(bc.cmd("MY_SECURITIES")[0])
+    print(p)
     for k in p:
+        our_securities[k] = p[k]
         for v in p[k]:
-            companies[k][v] = p[k][v]
+            our_securities[k][v] = p[k][v]
+            
 
 
 def update_all():
@@ -57,7 +60,7 @@ def update_all():
     for r in list(companies.keys()):
         bc.cmd("CLEAR_BIDS " + r)
 update_all()
-
+print(our_securities)
 mind.update_histories(companies)
 while True:
     if time.time() - st >= TICK_TIME:
@@ -70,14 +73,17 @@ while True:
             decision = ratio > 0
             if decision:
                 cmd="BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*MULTIPLIER))
-                print(cmd)
+                #print(cmd)
                 bc.cmd(cmd)
             else:
+                print(list(our_securities.keys()))
                 if i in list(our_securities.keys()):
                     amount = - (ratio*MULTIPLIER)
                     amount = min(our_securities[i]['shares'],amount)
                     cmd="ASK " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(amount))
                     print(cmd)
                     bc.cmd(cmd)
+
+            dividend = our_securities[i]['dividend']
     else:
         continue
