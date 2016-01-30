@@ -68,11 +68,15 @@ while True:
             ratio = mind.decide()[i]
             decision = ratio > 0
             if decision:
-                bc.cmd("BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*MULTIPLIER)))
+                cmd="BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*MULTIPLIER))
+                print(cmd)
+                bc.cmd(cmd)
             else:
                 if i in list(our_securities.keys()):
                     amount = - (ratio*MULTIPLIER)
                     amount = min(our_securities[i]['shares'],amount)
-                    bc.cmd("ASK " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(amount)))
+                    cmd="ASK " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(amount))
+                    print(cmd)
+                    bc.cmd(cmd)
     else:
         continue
