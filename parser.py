@@ -18,7 +18,21 @@ def parse_my_securities(output):
     return my_securities
 
 def parse_my_orders(output):
-    return 0
+    begin = output.find("[") + 1
+    end = output.find("]")
+    output = output.substring[begin:end]
+    list = output.split(" ")
+    my_orders = {}
+
+    for i in range(0, len(list) // 4):
+        index = i * 4
+        ticker = list[index + 1]
+        parameters["price"] = float(list[index + 2])
+        parameters["type"] = list[index]
+        parameters["shares"] = float(list[index + 3])
+        my_orders[ticker] = parameters
+        
+    return orders
 
 def parse_securities(output):
     list = output.split(" ")
@@ -47,7 +61,7 @@ def parse_orders(output):
         index = i * 3
         type = list[index]
         parameters["price"] = float(list[index + 1])
-        parameters["shares"] = float(slist[index + 2])
+        parameters["shares"] = float(list[index + 2])
         orders[type] = parameters
         
     return orders
@@ -63,4 +77,3 @@ def clear_bid_successful(output):
 
 def clear_ask_successful(output):
     return output == "CLEAR_ASK_OUT DONE"
-
