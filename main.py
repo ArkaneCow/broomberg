@@ -66,6 +66,7 @@ while True:
         mind.update_histories(companies)
         for i in list(companies.keys()):
             ratio = mind.decide()[i]
+            print(i + " ratio: " + str(ratio))
             decision = ratio > 0
             if decision:
                 cmd="BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*MULTIPLIER))
