@@ -85,7 +85,7 @@ while True:
                     bc.cmd(cmd)
 
             dividend = our_securities[i]['dividend']
-            if dividend == 0:
+            if dividend <= 0.0001:
                 amount = - (ratio*MULTIPLIER)
                 amount = min(our_securities[i]['shares'],amount)
                 cmd="ASK " + i + " " + str(companies[i]['price']-0.01) + " " + str(int(amount))  
