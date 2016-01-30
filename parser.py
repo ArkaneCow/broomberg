@@ -30,7 +30,7 @@ def parse_my_orders(output):
         parameters = {}
         parameters["price"] = float(list[index + 2])
         parameters["type"] = list[index]
-        parameters["shares"] = float(list[index + 3])
+        parameters["shares"] = int(list[index + 3])
         my_orders[ticker] = parameters
         
     return orders
@@ -62,7 +62,7 @@ def parse_orders(output):
         parameters = {}
         parameters["ticker"] = list[index + 1]
         parameters["price"] = float(list[index + 2])
-        parameters["shares"] = float(list[index + 3])
+        parameters["shares"] = int(list[index + 3])
         orders[type] = parameters
         
     return orders
@@ -78,3 +78,4 @@ def clear_bid_successful(output):
 
 def clear_ask_successful(output):
     return output == "CLEAR_ASK_OUT DONE"
+
