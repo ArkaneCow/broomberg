@@ -43,7 +43,7 @@ def update_all():
 update_all()
 while True:
     if time.time() - st >= TICK_TIME:
-        update_all()
         st = time.time()
+        update_all()
     else:
         continue
