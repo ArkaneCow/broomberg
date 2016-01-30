@@ -25,7 +25,7 @@ def parse_securities(output):
     list.pop(0)
     securities = {}
 
-    for i in range(0, len(list) / 4):
+    for i in range(0, len(list) // 4):
         index = i * 4
         ticker = list[index]
         parameters = {}
