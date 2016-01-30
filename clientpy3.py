@@ -1,8 +1,6 @@
 import socket
 import sys
-
-CLIENT_USER = "Broomberg"
-CLIENT_PASSWORD = "uo8UAdegdJ"
+import secret
 
 def run(user, password, *commands):
     HOST, PORT = "codebb.cloudapp.net", 17429
@@ -36,4 +34,4 @@ def subscribe(user, password):
             rline = sfile.readline()
 
 def run_auth(*commands):
-    run(CLIENT_USER, CLIENT_PASSWORD, *commands)
+    run(secret.SECRET_USER, secret.SECRET_PASSWORD, *commands)
