@@ -2,6 +2,7 @@ import time
 
 import network as net
 import parser as parse
+import testmind as mind
 
 TICK_TIME = 0.5
 
@@ -28,7 +29,7 @@ def security_update(data):
     for k in p:
         for v in p[k]:
             companies[k][v] = p[k][v]
-    print(companies)
+    #print(companies)
 
 def update_all():
     commands = ["SECURITIES"] + ["ORDERS " + t for t in companies]
@@ -39,11 +40,13 @@ def update_all():
         security_update(r)
     for r in order_responses:
         order_update(r)
-
 update_all()
+mind.update_histories(companies)
 while True:
     if time.time() - st >= TICK_TIME:
         st = time.time()
         update_all()
+        mind.update_histories(companies)
+        print(mind.decide())
     else:
         continue
