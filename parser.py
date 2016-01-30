@@ -52,18 +52,16 @@ def parse_securities(output):
     return securities
 
 def parse_orders(output):
-    begin = output.find("[") + 1
-    end = output.find("]")
-    output = output[begin:end]
     list = output.split(" ")
     orders = {}
 
-    for i in range(0, len(list) // 3):
-        index = i * 3
+    for i in range(0, len(list) // 4):
+        index = i * 4
         type = list[index]
         parameters = {}
-        parameters["price"] = float(list[index + 1])
-        parameters["shares"] = float(list[index + 2])
+        parameters["ticker"] = list[index + 1]
+        parameters["price"] = float(list[index + 2])
+        parameters["shares"] = float(list[index + 3])
         orders[type] = parameters
         
     return orders
