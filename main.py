@@ -5,6 +5,7 @@ import parser as parse
 import testmind as mind
 
 TICK_TIME = 0.5
+MULTIPLIER = 1000000
 
 bc = net.BClient.bclient_default()
 companies = None
@@ -52,9 +53,10 @@ while True:
         st = time.time()
         update_all()
         mind.update_histories(companies)
-        decisions = {}
         for i in list(companies.keys()):
-            decisions[i] = mind.decide()[i] > 0
-        
+            ratio = mind.decide()[i]
+            decision = ratio > 0
+            if decision:
+                bc.cmd("BID " + i + str(companies[i]['price']+0.01) + str(int(ratio*1000000)))
     else:
         continue
