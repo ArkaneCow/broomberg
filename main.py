@@ -36,7 +36,7 @@ def security_update(data):
     #print(companies)
 
 def our_securities_update():
-    p = parse.parse_my_securities()
+    p = parse.parse_my_securities(bc.cmd("MY_SECURITIES")[0])
     for k in p:
         for v in p[k]:
             companies[k][v] = p[k][v]
