@@ -14,6 +14,7 @@ def init_tickers():
 
 companies = init_tickers()
 orders = {}
+our_securities = {}
 money = 0
 print(companies)
 
@@ -34,6 +35,13 @@ def security_update(data):
             companies[k][v] = p[k][v]
     #print(companies)
 
+def our_securities_update():
+    p = parse.parse_my_securities(bc.cmd("MY_SECURITIES")[0])
+    for k in p:
+        for v in p[k]:
+            companies[k][v] = p[k][v]
+
+
 def update_all():
     money = parse.parse_my_cash(bc.cmd("MY_CASH")[0])
     print(str(money))
@@ -45,6 +53,9 @@ def update_all():
         security_update(r)
     for r in order_responses:
         order_update(r)
+    our_securities_update()
+    for r in list(companies.keys()):
+        bc.cmd("CLEAR_BIDS " + r)
 update_all()
 
 mind.update_histories(companies)
@@ -57,8 +68,16 @@ while True:
             ratio = mind.decide()[i]
             decision = ratio > 0
             if decision:
-                cmd = "BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*1000000))
+                cmd="BID " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(ratio*MULTIPLIER))
                 print(cmd)
                 bc.cmd(cmd)
+            else:
+                if i in list(our_securities.keys()):
+                    amount = - (ratio*MULTIPLIER)
+                    amount = min(our_securities[i]['shares'],amount)
+                    cmd="ASK " + i + " " + str(companies[i]['price']+0.01) + " " + str(int(amount))
+                    print(cmd)
+                    bc.cmd(cmd)
+
     else:
         continue
