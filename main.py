@@ -13,6 +13,7 @@ def init_tickers():
 
 companies = init_tickers()
 orders = {}
+money = 0
 print(companies)
 
 st = time.time()
@@ -32,6 +33,8 @@ def security_update(data):
     #print(companies)
 
 def update_all():
+    money = parse.parse_my_cash(bc.cmd("MY_CASH")[0])
+    print(str(money))
     commands = ["SECURITIES"] + ["ORDERS " + t for t in companies]
     responses = bc.cmd(*commands)
     order_responses = [o for o in responses if o.startswith("SECURITY_ORDERS_OUT")]
