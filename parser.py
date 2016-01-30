@@ -53,6 +53,7 @@ def parse_securities(output):
 
 def parse_orders(output):
     list = output.split(" ")
+    list.pop(0)
     orders = {}
 
     for i in range(0, len(list) // 4):
